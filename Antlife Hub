@@ -1,0 +1,601 @@
+Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/Carbonat3dMilk/Ant-Life-script-hub/main/Ant%20Life%20Script"))()
+
+
+local GUI = Mercury:Create{
+       Name = "Ant Hub",
+    Size = UDim2.fromOffset(600, 400),
+    Theme = Mercury.Themes.Dark,
+    Link = "https://discord.gg/kq3cxhDXhQ"
+}
+
+
+
+GUI:Notification{
+	Title = "Notification",
+	Text = "Thanks for using!",
+	Duration = 3,
+	Callback = function() end
+}
+
+
+
+
+
+
+
+
+local mt = getrawmetatable(game)
+
+setreadonly(mt, false)
+local old = mt.__index
+
+
+mt.__index = function(o, k)
+ if tostring(o) == "Humanoid" and tostring(k) == "WalkSpeed" then
+     return 20
+   end
+
+ return old(o, k)
+end
+
+
+local mt = getrawmetatable(game)
+
+setreadonly(mt, false)
+local old = mt.__index
+
+
+
+mt.__index = function(o, k) 
+ if tostring(o) == "Humanoid" and tostring(k) == "JumpPower" then 
+     return 50 --default jumppower 
+   end
+
+ return old(o, k)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+local Tab = GUI:Tab{
+	Name = "Main",
+	Icon = "http://www.roblox.com/asset/?id=6031215978"
+}
+
+
+Tab:Toggle{
+	Name = "Kill aura",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v)
+	    
+	    getgenv().loop1337= v
+		pcall(function()
+while getgenv().loop1337 do wait()
+for i, v in pairs(game.Players:GetPlayers()) do
+   if v.Character and v.Character.Parent and v.Character.Parent.Parent and v.Character.Parent.Parent ~= game.Players.LocalPlayer.Character.Parent.Parent then
+   	local magnitude = (v.Character.Head.Position - game.Players.LocalPlayer.Character.Head.Position).Magnitude
+   	if magnitude < 30 then
+   		print(i,v)
+local args = {
+    [1] = "heavy",
+    [2] = v.Character.Humanoid
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Bite1"):FireServer(unpack(args))
+end
+	end
+    end
+end
+end)
+	    
+	    end
+}
+
+Tab:Toggle{
+	Name = "Larvae aura",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v)
+	  
+	   getgenv().loop = v
+while getgenv().loop do
+    wait()
+    for i,v in pairs(workspace.AI:GetChildren()) do
+        local magnitude = (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        if magnitude < 30 then
+            print(i,v)
+
+            local args = {
+                [1] = "heavy",
+                [2] = v.Humanoid
+            }
+
+            game:GetService("ReplicatedStorage").Remotes.Bite1:FireServer(unpack(args))
+        end 
+    end
+end
+	  
+	    end
+}
+
+Tab:Toggle{
+	Name = "Auto farm",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v)
+	    
+	   getgenv().loop = v
+
+while getgenv().loop do
+    wait()
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if v.Character and v.Character.Parent and v.Character.Parent.Parent and v.Character.Parent.Parent ~= game.Players.LocalPlayer.Character.Parent.Parent then
+            local magnitude = (v.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if magnitude < math.huge then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if v.Character and v.Character.Parent and v.Character.Parent.Parent and v.Character.Parent.Parent ~= game.Players.LocalPlayer.Character.Parent.Parent then
+            local magnitude = (v.Character.Head.Position - game.Players.LocalPlayer.Character.Head.Position).Magnitude
+            if magnitude < 30 then
+                print(i,v)
+                local args = {
+                    [1] = "heavy",
+                    [2] = v.Character.Humanoid
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Bite1"):FireServer(unpack(args))
+            end
+        end
+    end
+end
+
+
+	    
+	    end
+}
+
+Tab:Toggle{
+	Name = "Auto farm larvae",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v) 
+	    
+	    	getgenv().loop5 = v
+		while getgenv().loop5 == true do
+			wait()
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.AI.Larvae.t12.CFrame
+local args = {
+    [1] = "heavy",
+    [2] = workspace.AI.Larvae.Humanoid
+}
+
+game:GetService("ReplicatedStorage").Remotes.Bite1:FireServer(unpack(args))
+if game.Workspace.AI:FindFirstChild("Larvae") then
+	print("exist")
+end
+end
+	    
+	    end
+}
+
+Tab:Toggle{
+	Name = "Collect food as an egg",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v) 
+	    
+	    	getgenv().loop3 = v
+		while getgenv().loop3 == true do
+			wait(0.1)
+					for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("ClickDetector") then
+				fireclickdetector(v)
+			end
+		end
+		end
+	    
+	    end
+}
+
+
+
+
+
+
+
+local Tab = GUI:Tab{
+	Name = "Enhancements",
+	Icon = "http://www.roblox.com/asset/?id=6031763426"
+}
+
+
+Tab:Slider{
+	Name = "Walk Speed (Default 20)",
+	Default = 20,
+	Min = 0,
+	Max = 500,
+	Callback = function(v) 
+	    
+	    game:service'Players'.LocalPlayer.Character.Humanoid.WalkSpeed = v
+	    
+	    printconsole(tostring(getrenv()._G))
+for i, v in next, getrenv()._G do
+printconsole(tostring(i)..tostring(v))
+end
+	    
+	    end
+}
+
+Tab:Slider{
+	Name = "Jump Power (Default 50)",
+	Default = 50,
+	Min = 0,
+	Max = 250,
+	Callback = function(v) 
+	    
+	    game:service'Players'.LocalPlayer.Character.Humanoid.JumpPower = v
+	    
+	    printconsole(tostring(getrenv()._G))
+for i, v in next, getrenv()._G do
+printconsole(tostring(i)..tostring(v))
+end
+	    
+	    end
+}
+
+
+
+
+
+
+
+Tab:Slider{
+	Name = "Fly Speed (Default 10)",
+	Default = 10,
+	Min = 0,
+	Max = 100,
+	Callback = function(v) 
+	    
+	     speed = v
+local speaker = game.Players.LocalPlayer
+local Hum, mouse = speaker.Character:FindFirstChildOfClass("Humanoid"), speaker:GetMouse()
+
+
+local Core = Instance.new('Part', workspace)
+Core.Size, Core.CanCollide = Vector3.new(0.05, 0.05, 0.05), false
+local Trs = Core
+
+local keys = {a = false, d = false, w = false, s = false}
+mouse.KeyDown:Connect(function(key)
+    if not Trs or not Trs.Parent then e1:disconnect() e2:disconnect() return end
+        if key == 'w' then
+            keys.w = true
+        elseif key == 's' then
+            keys.s = true
+        elseif key == 'a' then
+            keys.a = true
+        elseif key == 'd' then
+            keys.d = true
+    end
+end)
+
+
+mouse.KeyUp:Connect(function(key)
+    if key == 'w' then
+        keys.w = false
+    elseif key == 's' then
+        keys.s = false
+    elseif key == 'a' then
+        keys.a = false
+    elseif key == 'd' then
+        keys.d = false
+    end
+end)
+
+local Weld = Instance.new('Weld', Core)
+Weld.Part0, Weld.Part1, Weld.C0 = Core, Hum.RootPart, CFrame.new(0, 0, 0)
+
+local pos, gyro = Instance.new('BodyPosition', Trs), Instance.new('BodyGyro', Trs)
+pos.maxForce, pos.position = Vector3.new(math.huge, math.huge, math.huge), Trs.Position
+gyro.maxTorque, gyro.cframe = Vector3.new(9e9, 9e9, 9e9), Trs.CFrame
+
+repeat
+    wait()
+    if getgenv().test then
+    Hum.PlatformStand = true
+    local new = gyro.cframe - gyro.cframe.p + pos.position
+    speed = v
+    if keys.w then
+        new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed = speed + 0
+    end
+    if keys.s then
+        new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed = speed + 0
+    end
+    if keys.d then
+        new = new * CFrame.new(speed, 0, 0)
+        speed = speed + 0
+    end
+    if keys.a then
+        new = new * CFrame.new(-speed, 0, 0)
+        speed = speed + 0
+    end
+
+    pos.position = new.p
+    if keys.w then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad(speed * 0), 0, 0)
+    elseif keys.s then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(math.rad(speed * 0), 0, 0)
+    else
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+    end
+end
+until getgenv().test == false
+
+if gyro then gyro:Destroy() end
+if pos then pos:Destroy() end
+Hum.PlatformStand = false
+speed = 10
+end
+}
+
+
+
+Tab:Toggle{
+	Name = "Fly",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v)
+	    
+	    getgenv().test = v
+local speaker = game.Players.LocalPlayer
+local Hum, mouse = speaker.Character:FindFirstChildOfClass("Humanoid"), speaker:GetMouse()
+
+
+local Core = Instance.new('Part', workspace)
+Core.Size, Core.CanCollide = Vector3.new(0.05, 0.05, 0.05), false
+local Trs = Core
+
+local keys = {a = false, d = false, w = false, s = false}
+mouse.KeyDown:Connect(function(key)
+    if not Trs or not Trs.Parent then e1:disconnect() e2:disconnect() return end
+        if key == 'w' then
+            keys.w = true
+        elseif key == 's' then
+            keys.s = true
+        elseif key == 'a' then
+            keys.a = true
+        elseif key == 'd' then
+            keys.d = true
+    end
+end)
+
+
+mouse.KeyUp:Connect(function(key)
+    if key == 'w' then
+        keys.w = false
+    elseif key == 's' then
+        keys.s = false
+    elseif key == 'a' then
+        keys.a = false
+    elseif key == 'd' then
+        keys.d = false
+    end
+end)
+
+local Weld = Instance.new('Weld', Core)
+Weld.Part0, Weld.Part1, Weld.C0 = Core, Hum.RootPart, CFrame.new(0, 0, 0)
+
+local pos, gyro = Instance.new('BodyPosition', Trs), Instance.new('BodyGyro', Trs)
+pos.maxForce, pos.position = Vector3.new(math.huge, math.huge, math.huge), Trs.Position
+gyro.maxTorque, gyro.cframe = Vector3.new(9e9, 9e9, 9e9), Trs.CFrame
+
+repeat
+    wait()
+    if getgenv().test then
+    Hum.PlatformStand = true
+    local new = gyro.cframe - gyro.cframe.p + pos.position
+    speed = 2
+    if keys.w then
+        new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed = speed + 0
+    end
+    if keys.s then
+        new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+        speed = speed + 0
+    end
+    if keys.d then
+        new = new * CFrame.new(speed, 0, 0)
+        speed = speed + 0
+    end
+    if keys.a then
+        new = new * CFrame.new(-speed, 0, 0)
+        speed = speed + 0
+    end
+
+    pos.position = new.p
+    if keys.w then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad(speed * 0), 0, 0)
+    elseif keys.s then
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(math.rad(speed * 0), 0, 0)
+    else
+        gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+    end
+end
+until getgenv().test == false
+
+if gyro then gyro:Destroy() end
+if pos then pos:Destroy() end
+Hum.PlatformStand = false
+speed = 10
+end
+}
+
+
+
+
+
+Tab:Toggle{
+	Name = "Full Bright",
+	StartingState = false,
+	Description = nil,
+	Callback = function(v) 
+	    
+	    
+if getgenv().test == v then
+
+game.Lighting.GlobalShadows = true
+game.Lighting.FogEnd = 100000
+game.Lighting.Brightness = 1.5
+game.Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+game.Lighting.TimeOfDay = 14
+game.Lighting.SunRays.Intensity = 0.3
+
+else
+
+game.Lighting.GlobalShadows = false
+game.Lighting.FogEnd = math.huge
+game.Lighting.Brightness = 1
+game.Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+game.Lighting.TimeOfDay = 14
+game.Lighting.SunRays.Intensity = 0
+
+end
+	    end
+}
+
+
+Tab:Button{
+	Name = "ESP",
+	Description = nil,
+	Callback = function()
+	    
+	    loadstring(game:HttpGet("https://raw.githubusercontent.com/Spoorloos/scripts/main/universal_esp.lua"))();
+	    
+	    end
+}
+
+
+
+
+
+
+local Tab = GUI:Tab{
+	Name = "Miscellaneous",
+	Icon = "http://www.roblox.com/asset/?id=6031094691"
+}
+
+
+
+
+Tab:Button{
+	Name = "Infinite yeild",
+	Description = nil,
+	Callback = function() 
+	    
+	    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+	    
+	    end
+}
+
+
+Tab:Button{
+	Name = "Stop remote loops",
+	Description = nil,
+	Callback = function() 
+	    
+	getgenv().loop = false;
+    getgenv().loop2 = false;
+	    
+	    end
+}
+
+
+Tab:Button{
+	Name = "Bring larvae",
+	Description = nil,
+	Callback = function() 
+	    
+	        local larvae = workspace:WaitForChild("Carcasses"):WaitForChild("Larvae")
+local primaryPart = larvae:FindFirstChild("Head")
+larvae.PrimaryPart = primaryPart
+local playerCFrame = game.Players.LocalPlayer.Character.PrimaryPart.CFrame
+larvae:SetPrimaryPartCFrame(playerCFrame)
+	    
+	    end
+}
+
+
+
+Tab:Button{
+	Name = "Teleport to larvae",
+	Description = nil,
+	Callback = function() 
+	    
+	    for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+      			if v.Name == "t12" then
+      				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+				end
+			end
+	    
+	    end
+}
+
+
+
+
+
+
+
+
+Tab:ColorPicker{
+	Style = Mercury.ColorPickerStyles.Legacy,
+	Callback = function(color) end
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GUI:Credit{
+	Name = "Gaming",
+	Description = "Scripter",
+	Discord = "Gaming#5410"
+}
+
+
+GUI:Credit{
+	Name = "Carbonated_Milk",
+	Description = "Designer",
+	Discord = "Carbonated_Milk#5396"
+}
